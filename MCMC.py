@@ -3,7 +3,7 @@ from tqdm import tqdm
 from collections import defaultdict
 import time
 import matplotlib.pyplot as plt
-import env as Env
+import Env_8 as Env
 env = Env.Environ()
 env_train = Env.Environ()
 

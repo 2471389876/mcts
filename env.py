@@ -4,8 +4,9 @@ import numpy as np
 import random
 from agent import Agent
 
-class Environ:
+class Environment:
     def __init__(self):
+        self.ActionDim = 2
         self.MaxDistance = 6  # 最大距离？
         self.Deadline = 9  # 最大步数
         self.TimeTotal = 5 # 一个决策时隙有5s
@@ -24,6 +25,7 @@ class Environ:
 
     def reset(self):
         self.agent.reset()
+        return (self.agent.State[0], self.agent.State[1], self.agent.State[2])
 
     def calTransferTime(self, curDis):
         return 0.02 * curDis * curDis
@@ -58,8 +60,9 @@ class Environ:
     def step(self, action, trajectory):
         done = 0
         cost = 0
+        reward = 0
 
-        if self.state[0] == 0: # 距离为0时不存在迁移(a=1)的动作
+        if self.agent.State[0] == 0: # 距离为0时不存在迁移(a=1)的动作
             action = 0
         if action == 0:
             curDis = self.agent.State[0]
@@ -98,3 +101,5 @@ class Environ:
             self.disChangeTrans()
             
         self.agent.State[2] += 1
+
+        return ((self.agent.State[0], self.agent.State[1], self.agent.State[2]), reward, done, action, cost)
