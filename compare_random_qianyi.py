@@ -2,6 +2,7 @@ import random
 import numpy as np
 import Env_8 as Env
 import datetime
+from common import *
 env = Env.Environ()
 
 len_record = []
@@ -39,8 +40,11 @@ for j in range(1000):
 
 print('服务成功率：')
 print(deadline_count/1000)
+logging.info(f"random transfer strategy's service success ratio:{deadline_count/1000}")
+
 len_record = np.array(len_record)
 cost_record = np.array(cost_record)
 reward_record = np.array(reward_record)
 print('随机迁移的cost：')
 print(np.mean(cost_record))
+logging.info(f"random transfer strategy's cost:{np.mean(cost_record)}")

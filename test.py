@@ -1,41 +1,64 @@
+import logging
 import numpy as np
 import env as Env
+import argparse
+import random
+from common import *
+
+parser = argparse.ArgumentParser()
+# 算法有never, heuristic, always, random
+parser.add_argument('--Algo', default="never", type=str) 
+parser.add_argument('--TotalEpisodesNum', default=1000, type=int)
 env = Env.Environment()
 
-len_record = []
-cost_record = []
-reward_record = []
+def chooseStragey(args, dis):
+    if args.Algo == "never":
+        return 0
+    elif args.Algo == "always":
+        return 1
+    elif args.Algo == "random":
+        if random.random() <0.3 :
+            return 1
+        else:
+            return 0
+    elif args.Algo == "heuristic":
+        if dis > 3:
+            return 1
+        else:
+            return 0
 
-deadline_count = 0
-for j in range(1000):
-    state = env.reset()
-    trajectory = []
-    for i in range(100):
-        optimal_a = 1
-        next_state, reward, done, action, cost = env.step(optimal_a, trajectory)
-        #print(state, action, next_state, reward, cost)
-        #print(state)
-        state = next_state
-        trajectory.append((next_state, action, reward, cost))
 
-        if done:
-            len_record.append(len(trajectory))
-            cost_record.append(1000-reward)
-            reward_record.append(reward)
-            #print(1000-reward)
+def main(args):
+    lenRecord = []
+    costRecord = []
+    rewardRecord = []
 
-            if len(trajectory) <= env.Deadline:
-                deadline_count += 1
-            break
+    successTransferCount = 0
+    for j in range(args.TotalEpisodesNum):
+        state = env.reset()
+        trajectory = []
+        while True:
+            optimal_a = chooseStragey(args, env.agent.State[0])
+            next_state, reward, done, action, cost = env.step(optimal_a, trajectory)
+            state = next_state
+            trajectory.append((next_state, action, reward, cost))
 
-print('服务成功率：')
-print(deadline_count/1000)
+            if done:
+                lenRecord.append(len(trajectory))
+                costRecord.append(1000-reward)
+                rewardRecord.append(reward)
 
-len_record = np.array(len_record)
-cost_record = np.array(cost_record)
-reward_record = np.array(reward_record)
-print('一直迁移的cost：')
-print(np.mean(cost_record))
+                if len(trajectory) <= env.Deadline:
+                    successTransferCount += 1
+                break
+    costRecord = np.array(costRecord)
+    costAvg = np.mean(costRecord)
+    logging.info(f"{args.Algo} transfer strategy's service success ratio:{successTransferCount/args.TotalEpisodesNum}")
+    logging.info(f"{args.Algo} transfer strategy's cost:{np.mean(costRecord)}")
+
+if __name__ == "__main__":
+    args = parser.parse_args()
+    main(args)
 
 
 

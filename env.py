@@ -47,14 +47,14 @@ class Environment:
     def disChangeNoTrans(self):
         curDis = self.agent.State[0]
         if curDis == 0:
-            self.randChoiceTwoSelections(random.random(), self.P1, [curDis, curDis+1])
+            return self.randChoiceTwoSelections(random.random(), self.P1, [curDis, curDis+1])
         elif curDis == self.MaxDistance:
-            self.randChoiceTwoSelections(random.random(), self.P4, [curDis-1, curDis])
+            return self.randChoiceTwoSelections(random.random(), self.P4, [curDis-1, curDis])
         else:
-            self.randChoiceThreeSelections(random.random(), self.P2, self.P3, [curDis-1, curDis, curDis+1])
+            return self.randChoiceThreeSelections(random.random(), self.P2, self.P3, [curDis-1, curDis, curDis+1])
     
     def disChangeTrans(self):
-        self.randChoiceTwoSelections(random.random(), self.P1, [0, 1])
+        return self.randChoiceTwoSelections(random.random(), self.P1, [0, 1])
 
 
     def step(self, action, trajectory):
@@ -66,8 +66,8 @@ class Environment:
             action = 0
         if action == 0:
             curDis = self.agent.State[0]
-            cost = self.NoTranCostUnit * self.TimeTotal
             self.agent.State[1] -= self.RateInDiffDistanceList[curDis] * self.TimeTotal
+            cost = self.NoTranCostUnit * self.TimeTotal
             
             # 数据传输完成,轨迹结束
             if self.agent.State[1] < 0:
@@ -80,7 +80,7 @@ class Environment:
                 reward = 1000 - totalCost
                 done = 1
 
-            self.disChangeNoTrans()
+            self.agent.State[0] = self.disChangeNoTrans()
         else: 
             curDis = self.agent.State[0]
             transferTime = self.DataSize / self.TransferInDiffDistanceList[1] + self.calTransferTime(curDis)
@@ -89,6 +89,7 @@ class Environment:
             self.agent.State[1] -= self.RateInDiffDistanceList[curDis] * oldDisTransferTime
             self.agent.State[1] -= self.RateInDiffDistanceList[0] * newDisTransferTime
             cost = self.TranCostUnit + self.NoTranCostUnit * self.TimeTotal
+
             if self.agent.State[1] <= 0:
                 self.agent.State[1] = 0
 
@@ -98,7 +99,8 @@ class Environment:
                 totalCost += cost
                 reward = 1000 - totalCost
                 done = 1
-            self.disChangeTrans()
+
+            self.agent.State[0] = self.disChangeTrans()
             
         self.agent.State[2] += 1
 
