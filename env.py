@@ -104,4 +104,4 @@ class Environment:
             
         self.agent.State[2] += 1
 
-        return ((self.agent.State[0], self.agent.State[1], self.agent.State[2]), reward, done, action, cost)
+        return ((self.agent.State[0], self.agent.State[1]), reward, done, action, cost)
