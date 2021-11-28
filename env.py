@@ -10,9 +10,9 @@ class Environment:
         self.MaxDistance = 6  # 最大距离？
         self.Deadline = 9  # 最大步数
         self.TimeTotal = 5 # 一个决策时隙有5s
-        self.TimeForTraining = 0.05 # 训练时间0.05s
+        self.TimeForTraining = 0.06 # 训练时间0.05s
         self.NoTranCostUnit= 2 # 不迁移成本（单位/s） 
-        self.TranCostUnit = 50 # 迁移成本（单位/s） 
+        self.TranCostUnit = 50 # 迁移成本 
         self.RateInDiffDistanceList = [49.94, 29.844, 29.484, 28.884, 28.044, 26.964, 25.644]
         self.TransferInDiffDistanceList = [0, 30, 29.88, 29.52, 28.92, 27.0, 25.68]
         self.DataSize = 10 # 两个微云之间迁移的相关数据,设为10M

@@ -54,7 +54,7 @@ qTable = defaultdict(lambda: np.zeros(envForRun.ActionDim))
 costRecordList = []
 trainingCount = 0
 successTransferCount = 0
-for i in range(500):
+for i in range(10):
     print("第"+str(i+1)+"次用户应用的运行过程：")
     state = envForRun.reset()
     trajectory = []
@@ -64,9 +64,12 @@ for i in range(500):
         optimalPolicy = McmcControl(envForTrain)
         trainingCount += 1
         optimalAction = np.argmax(qTable.get((state[0], state[1])))
+        print(optimalAction)
         nextState, reward, done, action, cost = envForRun.step(optimalAction, trajectory)
+        print(action)
         state = nextState
         trajectory.append((nextState, action, reward, cost))
+        # print(trajectory)
         if done:
             costRecordList.append(1000 - reward)
             print("第" + str(i + 1) + "次用户的cost：", 1000 - reward)
@@ -78,7 +81,7 @@ for i in range(500):
 
 costRecordList = np.array(costRecordList)
 print("所有次用户的平均cost：",np.mean(costRecordList))
-print("传输成功率：",successTransferCount/500)
+print("传输成功率：",successTransferCount/10)
 # plt.plot(range(len(cost_record)), cost_record, linewidth=3)
 # plt.title("MCMC", fontsize=19)
 # plt.xlabel("Iteration", fontsize=10)
