@@ -1,8 +1,8 @@
-2021-11-19 12:07:24,244 - INFO - never transfer strategy's service success ratio:0.0
-2021-11-19 12:07:24,244 - INFO - never transfer strategy's cost:145.69
-2021-11-19 12:07:24,472 - INFO - always transfer strategy's service success ratio:1.0
-2021-11-19 12:07:24,472 - INFO - always transfer strategy's cost:462.45
-2021-11-19 12:07:24,696 - INFO - heuristic transfer strategy's service success ratio:0.0
-2021-11-19 12:07:24,696 - INFO - heuristic transfer strategy's cost:213.39
-2021-11-19 12:07:24,921 - INFO - random transfer strategy's service success ratio:0.006
-2021-11-19 12:07:24,921 - INFO - random transfer strategy's cost:271.71
+2021-11-28 13:41:34,564 - INFO - never transfer strategy's service success ratio:0.0
+2021-11-28 13:41:34,564 - INFO - never transfer strategy's cost:145.58
+2021-11-28 13:41:36,022 - INFO - always transfer strategy's service success ratio:1.0
+2021-11-28 13:41:36,022 - INFO - always transfer strategy's cost:458.25
+2021-11-28 13:41:37,059 - INFO - heuristic transfer strategy's service success ratio:0.0
+2021-11-28 13:41:37,059 - INFO - heuristic transfer strategy's cost:211.8
+2021-11-28 13:41:38,056 - INFO - random transfer strategy's service success ratio:0.009
+2021-11-28 13:41:38,056 - INFO - random transfer strategy's cost:270.8
